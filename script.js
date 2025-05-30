@@ -1,53 +1,75 @@
-function showPuzzle(puzzle) {
-  if (puzzle === '3x3') {
-    document.getElementById('three-by-three').style.display = 'block';
-  }
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: #f5f5f5;
+  color: #333;
 }
 
-function showDevMessage() {
-  alert('Still in development :)');
+header {
+  background: #d93025;
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
 }
 
-function showCFOP() {
-  document.getElementById('cfop-section').style.display = 'block';
+.logo {
+  width: 120px;
+  margin-bottom: 1rem;
 }
 
-function showPLL() {
-  const pllSection = document.getElementById('pll-section');
-  if (pllSection.innerHTML !== '') return; // Prevent duplicates
+.subtitle {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
 
-  const pllAlgs = {
-    "H perm": ["M2", "U", "M2", "U2", "M2", "U", "M2"],
-    "Z perm": ["M2", "U", "M2", "U", "M'", "U2", "M2", "U2", "M'", "U2"],
-    "Ua perm": ["R", "U'", "R", "U", "R", "U", "R", "U'", "R'", "U'", "R2"],
-    "Ub perm": ["R2", "U", "R", "U", "R'", "U'", "R'", "U'", "R'", "U", "R'"],
-    "Aa perm": ["x", "R'", "D'", "R", "U2", "R'", "D", "R", "U2", "R2"],
-    "Ab perm": ["x'", "R", "D", "R'", "U2", "R", "D'", "R'", "U2", "R2"],
-    "F perm": ["R'", "U'", "F'", "R", "U", "R'", "U'", "R", "F", "R2", "U'", "R'", "U'"],
-    "Ja perm": ["L'", "U'", "L", "F", "L'", "U'", "L", "U", "L", "F'", "L2", "U", "L", "U"],
-    "Jb perm": ["R", "U", "R'", "F'", "R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'"],
-    "Ra perm": ["R", "U'", "R'", "U'", "R", "U", "R", "D", "R'", "U'", "R", "D'", "R'", "U2", "R'"],
-    "Rb perm": ["R'", "U2", "R", "U2", "R'", "F", "R", "U", "R'", "U'", "R'", "F'", "R2"],
-    "T perm": ["R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'", "R", "U", "R'", "F'"],
-    "Y perm": ["F", "R", "U'", "R'", "U'", "R", "U", "R'", "F'", "R", "U", "R'", "U'", "R'", "F", "R", "F'"],
-    "Na perm": ["L", "U'", "R", "U2", "L'", "U", "L", "U2", "R'", "U", "L'"],
-    "Nb perm": ["R'", "U", "L'", "U2", "R", "U'", "R'", "U2", "L", "U'", "R"],
-    "Ga perm": ["R2", "U", "R'", "U", "R'", "U'", "R", "U'", "R2", "D", "U'", "R'", "U", "D'"],
-    "Gb perm": ["R'", "U'", "R", "D'", "R'", "U", "R", "U'", "R'", "D", "R2", "U", "R'", "U"],
-    "Gc perm": ["R2", "U'", "R", "U'", "R", "U", "R'", "U", "R2", "D'", "U", "R", "U'", "D"],
-    "Gd perm": ["R", "U", "R'", "D", "R", "U'", "R'", "U", "R", "D'", "R2", "U'", "R", "U'"],
-    "E perm": ["x'", "R", "U'", "R'", "D", "R", "U", "R'", "D'", "R", "U", "R'", "D", "R", "U'", "R'", "D'"],
-    "V perm": ["R'", "U", "R'", "D2", "R", "U'", "R'", "D2", "R2"]
-  };
+main {
+  padding: 2rem;
+  text-align: center;
+}
 
-  for (const [name, alg] of Object.entries(pllAlgs)) {
-    const div = document.createElement("div");
-    div.className = "pll-box";
-    div.innerHTML = `<strong>${name}</strong><div class="alg-text">Moves (${alg.length}): ${alg.map(m => `"${m}"`).join(", ")}</div>`;
-    div.onclick = () => {
-      const text = div.querySelector(".alg-text");
-      text.style.display = text.style.display === "block" ? "none" : "block";
-    };
-    pllSection.appendChild(div);
-  }
+.puzzle-select button,
+.method-select button,
+.cfop-buttons button {
+  margin: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  background: #4285f4;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #3367d6;
+}
+
+#pll-section {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.pll-box {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.pll-box strong {
+  font-size: 1.2rem;
+  color: #d93025;
+}
+
+.alg-text {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+  display: none;
 }
