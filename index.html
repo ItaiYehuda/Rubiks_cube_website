@@ -1,45 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Rubik's Cube Learning Space</title>
-  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .header {
+      background-color: cyan;
+      padding: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      border-radius: 50%;
+    }
+
+    h1 {
+      margin: 10px 0 5px;
+    }
+
+    p {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .button-container {
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 16px;
+      background-color: #fff;
+      border: 2px solid #000;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #ddd;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .sub-btn {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 14px;
+      background-color: #f0f0f0;
+      border: 1px solid #333;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .sub-description {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r2.png" alt="Logo" class="logo">
+
+  <div class="header">
+    <img src="your_profile_picture.jpg" alt="Logo" class="logo">
     <h1>Welcome to the Rubik's Cube Learning Space</h1>
-    <p class="subtitle">Here you can find many algorithms and methods to solve Rubik's cubes!</p>
-  </header>
-  <button onclick="test()">Test Button</button>
-  <script src="test.js" defer></script>
+    <p>Here you can find many algorithms and methods to solve Rubik's Cubes.</p>
+  </div>
 
-  <main>
-    <section class="puzzle-select">
-      <button onclick="showPuzzle('3x3')">3x3</button>
-      <button onclick="showDevMessage()">4x4</button>
-      <button onclick="showDevMessage()">2x2</button>
-      <button onclick="showDevMessage()">Square-1</button>
-      <button onclick="showDevMessage()">Pyraminx</button>
-      <button onclick="showDevMessage()">Megaminx</button>
-    </section>
+  <div class="button-container">
+    <button class="btn" onclick="showPuzzle('3x3')">3x3</button>
+    <button class="btn" onclick="showDevMessage()">4x4</button>
+    <button class="btn" onclick="showDevMessage()">2x2</button>
+    <button class="btn" onclick="showDevMessage()">SQ1</button>
+    <button class="btn" onclick="showDevMessage()">Pyraminx</button>
+    <button class="btn" onclick="showDevMessage()">Megaminx</button>
+  </div>
 
-    <section id="three-by-three" style="display: none;">
-      <h2>Choose a solving method</h2>
-      <div class="method-select">
-        <button onclick="showDevMessage()">LBL</button>
-        <button onclick="showCFOP()">CFOP</button>
-      </div>
+  <div id="three-by-three" class="section hidden">
+    <h2>Choose a method</h2>
+    <div>
+      <button class="sub-btn" onclick="showDevMessage()">LBL</button>
+      <div class="sub-description">LBL (The easiest and most simple way of solving a Rubik's Cube)</div>
+    </div>
+    <div>
+      <a href="cfop.html"><button class="sub-btn">CFOP</button></a>
+      <div class="sub-description">CFOP (Consisting of many algorithms for faster times)</div>
+    </div>
+  </div>
 
-      <div id="cfop-section" style="display: none;">
-<button onclick="location.href='cfop.html'">CFOP</button>
+  <script>
+    function showPuzzle(puzzle) {
+      if (puzzle === '3x3') {
+        document.getElementById('three-by-three').classList.remove('hidden');
+      }
+    }
 
-        <div id="pll-section"></div>
-      </div>
-    </section>
-  </main>
+    function showDevMessage() {
+      alert('Still in development :)');
+    }
+  </script>
 
-<script src="script.js" defer></script>
 </body>
 </html>
