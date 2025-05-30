@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CFOP Method</title>
+  <title>CFOP Page</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       background-color: #f2f9ff;
-      padding: 0;
       text-align: center;
     }
 
@@ -19,62 +18,71 @@
 
     .header h1 {
       margin: 0;
+      font-size: 32px;
+    }
+
+    .notation-btn {
+      margin-top: 15px;
+      padding: 8px 16px;
+      font-size: 16px;
+      border: none;
+      background-color: #333;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     .description {
       padding: 20px;
       text-align: left;
-      max-width: 700px;
+      max-width: 800px;
       margin: 0 auto;
       font-size: 18px;
-      color: #333;
-    }
-
-    .description strong {
-      color: #000;
+      color: #222;
     }
 
     .button-container {
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
-    .btn {
-      padding: 12px 24px;
-      margin: 10px;
+    .cfop-button {
+      padding: 12px 20px;
       font-size: 16px;
-      background-color: white;
-      border: 2px solid #333;
+      margin: 10px;
       border-radius: 8px;
+      border: 2px solid #000;
+      background-color: white;
       cursor: pointer;
-      transition: 0.3s;
     }
 
-    .btn:hover {
+    .cfop-button:hover {
       background-color: #e0e0e0;
     }
 
     .category-info {
-      margin-top: 10px;
       font-size: 14px;
-      color: #555;
+      color: #444;
+      margin-bottom: 20px;
     }
 
-    .pll-section {
+    #pll-section {
+      margin-top: 30px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      margin: 30px auto;
-      max-width: 700px;
+      gap: 16px;
     }
 
     .pll-box {
-      width: 100%;
-      margin: 10px 0;
-      padding: 10px;
       background-color: white;
       border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 16px;
+      border-radius: 10px;
       text-align: left;
+      font-size: 20px;
+      color: black;
       cursor: pointer;
     }
 
@@ -84,52 +92,57 @@
 
     .alg-text {
       display: none;
-      margin-top: 8px;
-      font-size: 16px;
-      color: black;
+      margin-top: 10px;
+      font-size: 18px;
     }
+
   </style>
 </head>
 <body>
 
   <div class="header">
     <h1>CFOP Method</h1>
+    <button class="notation-btn" onclick="showNotation()">Notation Guide</button>
   </div>
 
   <div class="description">
-    <p><strong>CFOP</strong> stands for:</p>
+    <p><strong>CFOP</strong> is an advanced method to solve the Rubik’s Cube efficiently. It includes four stages:</p>
     <ul>
-      <li><strong>Cross:</strong> Create a cross shape on one face (usually white).</li>
-      <li><strong>F2L (First Two Layers):</strong> Solve the first two layers simultaneously by inserting corner-edge pairs.</li>
-      <li><strong>OLL (Orientation of Last Layer):</strong> Make the opposite face (usually yellow) all one color.</li>
-      <li><strong>PLL (Permutation of Last Layer):</strong> Rearrange the last layer to complete the cube.</li>
+      <li><strong>Cross:</strong> Solve a cross on one face of the cube (typically white).</li>
+      <li><strong>F2L (First Two Layers):</strong> Pair and insert edges and corners to solve the bottom two layers simultaneously.</li>
+      <li><strong>OLL (Orientation of the Last Layer):</strong> Make the top layer (usually yellow) one color.</li>
+      <li><strong>PLL (Permutation of the Last Layer):</strong> Move pieces in the top layer to their correct positions.</li>
     </ul>
   </div>
 
   <div class="button-container">
-    <button class="btn" onclick="showDevMessage()">Cross</button>
-    <div class="category-info">~1 basic method (in development)</div>
+    <button class="cfop-button" onclick="showDevMessage()">Cross</button>
+    <div class="category-info">~1 method (in development)</div>
 
-    <button class="btn" onclick="showDevMessage()">F2L</button>
+    <button class="cfop-button" onclick="showDevMessage()">F2L</button>
     <div class="category-info">~41 cases (in development)</div>
 
-    <button class="btn" onclick="showDevMessage()">OLL</button>
+    <button class="cfop-button" onclick="showDevMessage()">OLL</button>
     <div class="category-info">57 algorithms (in development)</div>
 
-    <button class="btn" onclick="showPLL()">PLL</button>
+    <button class="cfop-button" onclick="showPLL()">PLL</button>
     <div class="category-info">21 algorithms</div>
   </div>
 
-  <div id="pll-section" class="pll-section"></div>
+  <div id="pll-section"></div>
 
   <script>
     function showDevMessage() {
-      alert('Still in development :)');
+      alert("Still in development :)");
+    }
+
+    function showNotation() {
+      alert("Notation Guide:\nR = Right face\nL = Left face\nU = Upper face\nD = Down face\nF = Front face\nB = Back face\n'\nmeans counter-clockwise. For example, R' = Right counter-clockwise.");
     }
 
     function showPLL() {
-      const pllSection = document.getElementById('pll-section');
-      if (pllSection.innerHTML !== '') return;
+      const section = document.getElementById("pll-section");
+      if (section.innerHTML !== '') return;
 
       const pllAlgs = {
         "H perm": ["M2", "U", "M2", "U2", "M2", "U", "M2"],
@@ -156,18 +169,19 @@
       };
 
       for (const [name, alg] of Object.entries(pllAlgs)) {
-        const div = document.createElement("div");
-        div.className = "pll-box";
-        div.innerHTML = `<strong>${name}</strong>
-                         <div class="alg-text">Moves: ${alg.map(m => `"${m}"`).join(" ")}</div>`;
-        div.onclick = () => {
-          const text = div.querySelector(".alg-text");
+        const box = document.createElement("div");
+        box.className = "pll-box";
+        box.innerHTML = `
+          <strong>${name}</strong>
+          <div class="alg-text">Algorithm: ${alg.map(m => `"${m}"`).join(" ")}</div>
+        `;
+        box.onclick = () => {
+          const text = box.querySelector(".alg-text");
           text.style.display = text.style.display === "block" ? "none" : "block";
         };
-        pllSection.appendChild(div);
+        section.appendChild(box);
       }
     }
   </script>
-
 </body>
 </html>
