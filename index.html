@@ -3,15 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rubik's Cube PLL Algorithms</title>
+  <title>Rubik's Cube Learning Space</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <header>
-    <h1>Rubik's Cube PLL Algorithms</h1>
+    <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r2.png" alt="Logo" class="logo">
+    <h1>Welcome to the Rubik's Cube Learning Space</h1>
+    <p class="subtitle">Here you can find many algorithms and methods to solve Rubik's cubes!</p>
   </header>
 
-  <main id="pll-container"></main>
+  <main>
+    <section class="puzzle-select">
+      <button onclick="showPuzzle('3x3')">3x3</button>
+      <button onclick="showDevMessage()">4x4</button>
+      <button onclick="showDevMessage()">2x2</button>
+      <button onclick="showDevMessage()">Square-1</button>
+      <button onclick="showDevMessage()">Pyraminx</button>
+      <button onclick="showDevMessage()">Megaminx</button>
+    </section>
+
+    <section id="three-by-three" style="display: none;">
+      <h2>Choose a solving method</h2>
+      <div class="method-select">
+        <button onclick="showDevMessage()">LBL</button>
+        <button onclick="showCFOP()">CFOP</button>
+      </div>
+
+      <div id="cfop-section" style="display: none;">
+        <h3>CFOP Sections</h3>
+        <div class="cfop-buttons">
+          <button onclick="showDevMessage()">Cross</button>
+          <button onclick="showDevMessage()">F2L</button>
+          <button onclick="showDevMessage()">OLL</button>
+          <button onclick="showPLL()">PLL</button>
+        </div>
+
+        <div id="pll-section"></div>
+      </div>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
