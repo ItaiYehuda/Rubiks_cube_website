@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CFOP PLL Algorithms</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .top-bar {
+      background-color: cyan;
+      padding: 15px 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #003;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .notation-button {
+      background-color: #fff;
+      border: 2px solid #333;
+      padding: 8px 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .pll-box {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      padding: 16px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 100%;
+    }
+
+    .pll-image {
+      width: 100px;
+      height: 100px;
+      background-color: #eee;
+      margin-right: 20px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .pll-text {
+      flex-grow: 1;
+    }
+
+    .pll-text strong {
+      display: block;
+      font-size: 20px;
+      color: #000;
+      margin-bottom: 8px;
+    }
+
+    .pll-alg {
+      font-size: 18px;
+      color: #000;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    Rubik's Cube PLL Algorithms
+    <button class="notation-button" onclick="alert('Notation guide coming soon!')">Notation Guide</button>
+  </div>
+
+  <div class="content" id="pll-section">
+    <!-- PLLs will be injected here -->
+  </div>
+
+  <script>
+    const pllAlgs = {
+      "H perm": ["M2", "U", "M2", "U2", "M2", "U", "M2"],
+      "Z perm": ["M2", "U", "M2", "U", "M'", "U2", "M2", "U2", "M'", "U2"],
+      "Ua perm": ["R", "U'", "R", "U", "R", "U", "R", "U'", "R'", "U'", "R2"],
+      "Ub perm": ["R2", "U", "R", "U", "R'", "U'", "R'", "U'", "R'", "U", "R'"],
+      "Aa perm": ["x", "R'", "D'", "R", "U2", "R'", "D", "R", "U2", "R2"],
+      "Ab perm": ["x'", "R", "D", "R'", "U2", "R", "D'", "R'", "U2", "R2"],
+      "F perm": ["R'", "U'", "F'", "R", "U", "R'", "U'", "R", "F", "R2", "U'", "R'", "U'"],
+      "Ja perm": ["L'", "U'", "L", "F", "L'", "U'", "L", "U", "L", "F'", "L2", "U", "L", "U"],
+      "Jb perm": ["R", "U", "R'", "F'", "R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'"],
+      "Ra perm": ["R", "U'", "R'", "U'", "R", "U", "R", "D", "R'", "U'", "R", "D'", "R'", "U2", "R'"],
+      "Rb perm": ["R'", "U2", "R", "U2", "R'", "F", "R", "U", "R'", "U'", "R'", "F'", "R2"],
+      "T perm": ["R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'", "R", "U", "R'", "F'"],
+      "Y perm": ["F", "R", "U'", "R'", "U'", "R", "U", "R'", "F'", "R", "U", "R'", "U'", "R'", "F", "R", "F'"],
+      "Na perm": ["L", "U'", "R", "U2", "L'", "U", "L", "U2", "R'", "U", "L'"],
+      "Nb perm": ["R'", "U", "L'", "U2", "R", "U'", "R'", "U2", "L", "U'", "R"],
+      "Ga perm": ["R2", "U", "R'", "U", "R'", "U'", "R", "U'", "R2", "D", "U'", "R'", "U", "D'"],
+      "Gb perm": ["R'", "U'", "R", "D'", "R'", "U", "R", "U'", "R'", "D", "R2", "U", "R'", "U"],
+      "Gc perm": ["R2", "U'", "R", "U'", "R", "U", "R'", "U", "R2", "D'", "U", "R", "U'", "D"],
+      "Gd perm": ["R", "U", "R'", "D", "R", "U'", "R'", "U", "R", "D'", "R2", "U'", "R", "U'"],
+      "E perm": ["x'", "R", "U'", "R'", "D", "R", "U", "R'", "D'", "R", "U", "R'", "D", "R", "U'", "R'", "D'"],
+      "V perm": ["R'", "U", "R'", "D2", "R", "U'", "R'", "D2", "R2"]
+    };
+
+    const pllSection = document.getElementById("pll-section");
+
+    for (const [name, alg] of Object.entries(pllAlgs)) {
+      const box = document.createElement("div");
+      box.className = "pll-box";
+
+      const image = document.createElement("div");
+      image.className = "pll-image";
+      image.innerText = "Image";
+
+      const text = document.createElement("div");
+      text.className = "pll-text";
+      text.innerHTML = `<strong>${name}</strong><div class="pll-alg">${alg.map(m => `"${m}"`).join(", ")}</div>`;
+
+      box.appendChild(image);
+      box.appendChild(text);
+      pllSection.appendChild(box);
+    }
+  </script>
+</body>
+</html>
