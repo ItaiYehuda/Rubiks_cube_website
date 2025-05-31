@@ -17,7 +17,7 @@
       background-color: cyan;
       padding: 25px;
       text-align: center;
-      font-size: 30px;
+      font-size: 28px;
       font-weight: bold;
       color: #333;
     }
@@ -43,7 +43,7 @@
     }
 
     .pll-name {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
       color: #006064;
     }
@@ -52,15 +52,18 @@
       display: none;
       margin-top: 15px;
       font-size: 20px;
-      color: #000;
+      color: #111;
       line-height: 1.6;
+      padding: 10px;
+      background-color: #ffffff;
+      border-radius: 6px;
     }
 
     .alg-text span {
       display: inline-block;
+      margin: 5px 8px;
+      padding: 6px 12px;
       background-color: #e0f2f1;
-      margin: 5px;
-      padding: 8px 12px;
       border-radius: 6px;
       font-family: monospace;
       font-size: 18px;
@@ -69,13 +72,14 @@
 </head>
 <body>
 
-  <header>PLL Algorithms</header>
+<header>PLL Algorithms</header>
 
-  <div class="container" id="pll-section">
-    <!-- Algorithm boxes will appear here -->
-  </div>
+<div class="container" id="pll-section">
+  <!-- PLL Algs will be added here by JavaScript -->
+</div>
 
-  <script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
     const pllAlgs = {
       "H perm": ["M2", "U", "M2", "U2", "M2", "U", "M2"],
       "Z perm": ["M2", "U", "M2", "U", "M'", "U2", "M2", "U2", "M'", "U2"],
@@ -106,28 +110,29 @@
       const pllBox = document.createElement('div');
       pllBox.className = 'pll-box';
 
-      const pllTitle = document.createElement('div');
-      pllTitle.className = 'pll-name';
-      pllTitle.textContent = name;
+      const title = document.createElement('div');
+      title.className = 'pll-name';
+      title.textContent = name;
 
       const algText = document.createElement('div');
       algText.className = 'alg-text';
+
       alg.forEach(move => {
         const span = document.createElement('span');
         span.textContent = move;
         algText.appendChild(span);
       });
 
-      pllBox.appendChild(pllTitle);
+      pllBox.appendChild(title);
       pllBox.appendChild(algText);
-
       pllBox.onclick = () => {
         algText.style.display = algText.style.display === 'block' ? 'none' : 'block';
       };
 
       pllSection.appendChild(pllBox);
     }
-  </script>
+  });
+</script>
 
 </body>
 </html>
