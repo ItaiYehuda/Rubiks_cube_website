@@ -1,65 +1,133 @@
-<script>
-window.onload = function() {
-  const pllAlgs = {
-    "H perm": ["M2", "U", "M2", "U2", "M2", "U", "M2"],
-    "Z perm": ["M2", "U", "M2", "U", "M'", "U2", "M2", "U2", "M'", "U2"],
-    "Ua perm": ["R", "U'", "R", "U", "R", "U", "R", "U'", "R'", "U'", "R2"],
-    "Ub perm": ["R2", "U", "R", "U", "R'", "U'", "R'", "U'", "R'", "U", "R'"],
-    "Aa perm": ["x", "R'", "D'", "R", "U2", "R'", "D", "R", "U2", "R2"],
-    "Ab perm": ["x'", "R", "D", "R'", "U2", "R", "D'", "R'", "U2", "R2"],
-    "F perm": ["R'", "U'", "F'", "R", "U", "R'", "U'", "R", "F", "R2", "U'", "R'", "U'"],
-    "Ja perm": ["L'", "U'", "L", "F", "L'", "U'", "L", "U", "L", "F'", "L2", "U", "L", "U"],
-    "Jb perm": ["R", "U", "R'", "F'", "R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'"],
-    "Ra perm": ["R", "U'", "R'", "U'", "R", "U", "R", "D", "R'", "U'", "R", "D'", "R'", "U2", "R'"],
-    "Rb perm": ["R'", "U2", "R", "U2", "R'", "F", "R", "U", "R'", "U'", "R'", "F'", "R2"],
-    "T perm": ["R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'", "R", "U", "R'", "F'"],
-    "Y perm": ["F", "R", "U'", "R'", "U'", "R", "U", "R'", "F'", "R", "U", "R'", "U'", "R'", "F", "R", "F'"],
-    "Na perm": ["L", "U'", "R", "U2", "L'", "U", "L", "U2", "R'", "U", "L'"],
-    "Nb perm": ["R'", "U", "L'", "U2", "R", "U'", "R'", "U2", "L", "U'", "R"],
-    "Ga perm": ["R2", "U", "R'", "U", "R'", "U'", "R", "U'", "R2", "D", "U'", "R'", "U", "D'"],
-    "Gb perm": ["R'", "U'", "R", "D'", "R'", "U", "R", "U'", "R'", "D", "R2", "U", "R'", "U"],
-    "Gc perm": ["R2", "U'", "R", "U'", "R", "U", "R'", "U", "R2", "D'", "U", "R", "U'", "D"],
-    "Gd perm": ["R", "U", "R'", "D", "R", "U'", "R'", "U", "R", "D'", "R2", "U'", "R", "U'"],
-    "E perm": ["x'", "R", "U'", "R'", "D", "R", "U", "R'", "D'", "R", "U", "R'", "D", "R", "U'", "R'", "D'"],
-    "V perm": ["R'", "U", "R'", "D2", "R", "U'", "R'", "D2", "R2"]
-  };
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PLL Algorithms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+    }
 
-  const pllSection = document.getElementById('pll-section');
+    header {
+      background-color: cyan;
+      padding: 25px;
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: #333;
+    }
 
-  for (const [name, moves] of Object.entries(pllAlgs)) {
-    // Create container for each PLL algorithm
-    const pllBox = document.createElement('div');
-    pllBox.className = 'pll-box';
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
 
-    // PLL name/title
-    const pllTitle = document.createElement('div');
-    pllTitle.className = 'pll-name';
-    pllTitle.textContent = name;
+    .pll-box {
+      border: 2px solid #00bcd4;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: #f0f8ff;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
 
-    // Moves container, visible by default
-    const algText = document.createElement('div');
-    algText.className = 'alg-text';
-    algText.style.display = 'block';  // show moves immediately
+    .pll-box:hover {
+      background-color: #e0f7fa;
+    }
 
-    // Add each move as a styled span
-    moves.forEach(move => {
-      const moveSpan = document.createElement('span');
-      moveSpan.textContent = move;
-      moveSpan.style.margin = '0 5px';
-      moveSpan.style.padding = '3px 8px';
-      moveSpan.style.backgroundColor = '#e0f2f1';
-      moveSpan.style.borderRadius = '5px';
-      moveSpan.style.fontFamily = 'monospace';
-      moveSpan.style.fontSize = '18px';
-      algText.appendChild(moveSpan);
-    });
+    .pll-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #006064;
+    }
 
-    // Append title and moves to the pll box
-    pllBox.appendChild(pllTitle);
-    pllBox.appendChild(algText);
+    .alg-text {
+      display: none;
+      margin-top: 15px;
+      font-size: 20px;
+      color: #000;
+      line-height: 1.6;
+    }
 
-    // Append pll box to main section
-    pllSection.appendChild(pllBox);
-  }
-};
-</script>
+    .alg-text span {
+      display: inline-block;
+      background-color: #e0f2f1;
+      margin: 5px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>PLL Algorithms</header>
+
+  <div class="container" id="pll-section">
+    <!-- Algorithm boxes will appear here -->
+  </div>
+
+  <script>
+    const pllAlgs = {
+      "H perm": ["M2", "U", "M2", "U2", "M2", "U", "M2"],
+      "Z perm": ["M2", "U", "M2", "U", "M'", "U2", "M2", "U2", "M'", "U2"],
+      "Ua perm": ["R", "U'", "R", "U", "R", "U", "R", "U'", "R'", "U'", "R2"],
+      "Ub perm": ["R2", "U", "R", "U", "R'", "U'", "R'", "U'", "R'", "U", "R'"],
+      "Aa perm": ["x", "R'", "D'", "R", "U2", "R'", "D", "R", "U2", "R2"],
+      "Ab perm": ["x'", "R", "D", "R'", "U2", "R", "D'", "R'", "U2", "R2"],
+      "F perm": ["R'", "U'", "F'", "R", "U", "R'", "U'", "R", "F", "R2", "U'", "R'", "U'"],
+      "Ja perm": ["L'", "U'", "L", "F", "L'", "U'", "L", "U", "L", "F'", "L2", "U", "L", "U"],
+      "Jb perm": ["R", "U", "R'", "F'", "R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'"],
+      "Ra perm": ["R", "U'", "R'", "U'", "R", "U", "R", "D", "R'", "U'", "R", "D'", "R'", "U2", "R'"],
+      "Rb perm": ["R'", "U2", "R", "U2", "R'", "F", "R", "U", "R'", "U'", "R'", "F'", "R2"],
+      "T perm": ["R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'", "R", "U", "R'", "F'"],
+      "Y perm": ["F", "R", "U'", "R'", "U'", "R", "U", "R'", "F'", "R", "U", "R'", "U'", "R'", "F", "R", "F'"],
+      "Na perm": ["L", "U'", "R", "U2", "L'", "U", "L", "U2", "R'", "U", "L'"],
+      "Nb perm": ["R'", "U", "L'", "U2", "R", "U'", "R'", "U2", "L", "U'", "R"],
+      "Ga perm": ["R2", "U", "R'", "U", "R'", "U'", "R", "U'", "R2", "D", "U'", "R'", "U", "D'"],
+      "Gb perm": ["R'", "U'", "R", "D'", "R'", "U", "R", "U'", "R'", "D", "R2", "U", "R'", "U"],
+      "Gc perm": ["R2", "U'", "R", "U'", "R", "U", "R'", "U", "R2", "D'", "U", "R", "U'", "D"],
+      "Gd perm": ["R", "U", "R'", "D", "R", "U'", "R'", "U", "R", "D'", "R2", "U'", "R", "U'"],
+      "E perm": ["x'", "R", "U'", "R'", "D", "R", "U", "R'", "D'", "R", "U", "R'", "D", "R", "U'", "R'", "D'"],
+      "V perm": ["R'", "U", "R'", "D2", "R", "U'", "R'", "D2", "R2"]
+    };
+
+    const pllSection = document.getElementById('pll-section');
+
+    for (const [name, alg] of Object.entries(pllAlgs)) {
+      const pllBox = document.createElement('div');
+      pllBox.className = 'pll-box';
+
+      const pllTitle = document.createElement('div');
+      pllTitle.className = 'pll-name';
+      pllTitle.textContent = name;
+
+      const algText = document.createElement('div');
+      algText.className = 'alg-text';
+      alg.forEach(move => {
+        const span = document.createElement('span');
+        span.textContent = move;
+        algText.appendChild(span);
+      });
+
+      pllBox.appendChild(pllTitle);
+      pllBox.appendChild(algText);
+
+      pllBox.onclick = () => {
+        algText.style.display = algText.style.display === 'block' ? 'none' : 'block';
+      };
+
+      pllSection.appendChild(pllBox);
+    }
+  </script>
+
+</body>
+</html>
